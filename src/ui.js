@@ -11,7 +11,8 @@ export default class Ui {
    * @param {object} ui - image tool Ui module
    * @param {object} ui.api - Editor.js API
    * @param {ImageConfig} ui.config - user config
-   * @param {Function} ui.onSelectFile - callback for clicks on Select file button
+   * @param {Function} ui.onSelectFile - callback for clicks on Select file
+   *   button
    * @param {boolean} ui.readOnly - read-only mode flag
    */
   constructor({ api, config, onSelectFile, readOnly }) {
@@ -98,7 +99,6 @@ export default class Ui {
     } else {
       this.toggleStatus(Ui.status.UPLOADING);
     }
-
     return this.nodes.wrapper;
   }
 
@@ -149,7 +149,8 @@ export default class Ui {
    */
   fillImage(url) {
     /**
-     * Check for a source extension to compose element correctly: video tag for mp4, img — for others
+     * Check for a source extension to compose element correctly: video tag for
+     * mp4, img — for others
      */
     const tag = /\.mp4$/.test(url) ? 'VIDEO' : 'IMG';
 
@@ -158,7 +159,8 @@ export default class Ui {
     };
 
     /**
-     * We use eventName variable because IMG and VIDEO tags have different event to be called on source load
+     * We use eventName variable because IMG and VIDEO tags have different
+     * event to be called on source load
      * - IMG: load
      * - VIDEO: loadeddata
      *

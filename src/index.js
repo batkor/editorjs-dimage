@@ -7,17 +7,21 @@
  *
  * To developers.
  * To simplify Tool structure, we split it to 4 parts:
- *  1) index.js — main Tool's interface, public API and methods for working with data
- *  2) uploader.js — module that has methods for sending files via AJAX: from device, by URL or File pasting
+ *  1) index.js — main Tool's interface, public API and methods for working
+ *   with data
+ *  2) uploader.js — module that has methods for sending files via AJAX: from
+ *   device, by URL or File pasting
  *  3) ui.js — module for UI manipulations: render, showing preloader, etc
  *  4) tunes.js — working with Block Tunes: render buttons, handle clicks
  *
  * For debug purposes there is a testing server
- * that can save uploaded files and return a Response {@link UploadResponseFormat}
+ * that can save uploaded files and return a Response
+ *   {@link UploadResponseFormat}
  *
  *       $ node dev/server.js
  *
- * It will expose 8008 port, so you can pass http://localhost:8008 with the Tools config:
+ * It will expose 8008 port, so you can pass http://localhost:8008 with the
+ *   Tools config:
  *
  * image: {
  *   class: ImageTool,
@@ -35,8 +39,10 @@
  * @description Image Tool's input and output data format
  * @property {string} caption — image caption
  * @property {boolean} withBorder - should image be rendered with border
- * @property {boolean} withBackground - should image be rendered with background
- * @property {boolean} stretched - should image be stretched to full width of container
+ * @property {boolean} withBackground - should image be rendered with
+ *   background
+ * @property {boolean} stretched - should image be stretched to full width of
+ *   container
  * @property {object} file — Image file data returned from backend
  * @property {string} file.url — image URL
  */
@@ -58,11 +64,14 @@ import Uploader from './uploader';
  * @property {string} types - available mime-types
  * @property {string} captionPlaceholder - placeholder for Caption field
  * @property {object} additionalRequestData - any data to send with requests
- * @property {object} additionalRequestHeaders - allows to pass custom headers with Request
+ * @property {object} additionalRequestHeaders - allows to pass custom headers
+ *   with Request
  * @property {string} buttonContent - overrides for Select File button
  * @property {object} [uploader] - optional custom uploader
- * @property {function(File): Promise.<UploadResponseFormat>} [uploader.uploadByFile] - method that upload image by File
- * @property {function(string): Promise.<UploadResponseFormat>} [uploader.uploadByUrl] - method that upload image by URL
+ * @property {function(File): Promise.<UploadResponseFormat>}
+ *   [uploader.uploadByFile] - method that upload image by File
+ * @property {function(string): Promise.<UploadResponseFormat>}
+ *   [uploader.uploadByUrl] - method that upload image by URL
  */
 
 /**
@@ -71,7 +80,8 @@ import Uploader from './uploader';
  * @property {number} success - 1 for successful uploading, 0 for failure
  * @property {object} file - Object with file data.
  *                           'url' is required,
- *                           also can contain any additional data that will be saved and passed back
+ *                           also can contain any additional data that will be
+ *   saved and passed back
  * @property {string} file.url - [Required] image source URL
  */
 export default class ImageTool {
@@ -156,6 +166,7 @@ export default class ImageTool {
       api,
       actions: this.config.actions,
       onChange: (tuneName) => this.tuneToggled(tuneName),
+      setImageStyle: (imageStyleId) => this.setImageStyle(imageStyleId)
     });
 
     /**
@@ -216,7 +227,8 @@ export default class ImageTool {
    * Specify paste substitutes
    *
    * @see {@link https://github.com/codex-team/editor.js/blob/master/docs/tools.md#paste-handling}
-   * @returns {{tags: string[], patterns: object<string, RegExp>, files: {extensions: string[], mimeTypes: string[]}}}
+   * @returns {{tags: string[], patterns: object<string, RegExp>, files:
+   *   {extensions: string[], mimeTypes: string[]}}}
    */
   static get pasteConfig() {
     return {
@@ -430,4 +442,18 @@ export default class ImageTool {
     this.ui.showPreloader(url);
     this.uploader.uploadByUrl(url);
   }
+
+  /**
+   *
+   * @param {string} imageStyleId
+   */
+  setImageStyle(imageStyleId) {
+    // this._data['file']['url'] = url;
+    this._data['image_style'] = imageStyleId;
+    this.ui.toggleStatus('loading')
+    this.ui.nodes.imageEl.remove()
+    this.ui.fillImage('https://aosa.org/wp-content/uploads/2019/04/image-placeholder-350x350.png')
+    console.log(this.data)
+  }
+
 }

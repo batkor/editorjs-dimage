@@ -40,6 +40,7 @@
  * @property {string} caption — image caption
  * @property {boolean} withBorder - should image be rendered with border
  * @property {boolean} withBackground - should image be rendered with
+ * @property {string} image_style - should image be rendered with
  *   background
  * @property {boolean} stretched - should image be stretched to full width of
  *   container
@@ -58,8 +59,10 @@ import Uploader from './uploader';
  * @typedef {object} ImageConfig
  * @description Config supported by Tool
  * @property {object} endpoints - upload endpoints
+ * @property {object} imageStyles - the image styles list
  * @property {string} endpoints.byFile - upload by file
  * @property {string} endpoints.byUrl - upload by URL
+ * @property {string} endpoints.fetchStyleUrl - endpoint for get image style url
  * @property {string} field - field name for uploaded image
  * @property {string} types - available mime-types
  * @property {string} captionPlaceholder - placeholder for Caption field
@@ -132,6 +135,7 @@ export default class ImageTool {
       buttonContent: config.buttonContent || '',
       uploader: config.uploader || undefined,
       actions: config.actions || [],
+      imageStyles: config.image_styles || {},
     };
 
     /**
@@ -210,7 +214,7 @@ export default class ImageTool {
    * @returns {Element}
    */
   renderSettings() {
-    return this.tunes.render(this.data);
+    return this.tunes.render(this.data, this.config);
   }
 
   /**
@@ -308,13 +312,15 @@ export default class ImageTool {
    */
   set data(data) {
     this.image = data.file;
-
+    this._data.image_style = data.image_style || '';
+    if (data.image_style) {
+      this.setImageStyle(data.image_style);
+    }
     this._data.caption = data.caption || '';
     this.ui.fillCaption(this._data.caption);
 
     Tunes.tunes.forEach(({ name: tune }) => {
       const value = typeof data[tune] !== 'undefined' ? data[tune] === true || data[tune] === 'true' : false;
-
       this.setTune(tune, value);
     });
   }
@@ -444,16 +450,25 @@ export default class ImageTool {
   }
 
   /**
+   * Setter image style value and set temp image url.
    *
    * @param {string} imageStyleId
    */
   setImageStyle(imageStyleId) {
-    // this._data['file']['url'] = url;
     this._data['image_style'] = imageStyleId;
     this.ui.toggleStatus('loading')
-    this.ui.nodes.imageEl.remove()
-    this.ui.fillImage('https://aosa.org/wp-content/uploads/2019/04/image-placeholder-350x350.png')
-    console.log(this.data)
+    if (this.ui.nodes.imageEl) this.ui.nodes.imageEl.remove();
+    // Set origin image url.
+    if (imageStyleId === '') {
+      this.ui.fillImage(this._data['file']['url'])
+      return;
+    }
+    this.uploader.fetchImageStyleUrl({
+      file_id: this._data['file']['id'],
+      image_style_id: imageStyleId,
+    }, (data) => {
+      this.ui.fillImage(data['url'])
+    })
   }
 
 }

@@ -148,7 +148,7 @@
   -webkit-transform: translateY(-8px);
   transform: translateY(-8px);
   left: -1px;
-  width: 150px;
+  max-width: 114px;
   margin-top: 5px;
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
@@ -165,11 +165,11 @@
 
 .choose_image_style .label {
   color: #707684;
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 500;
-  letter-spacing: .33px;
-  padding: 10px 10px 5px;
+  padding: 10px 5px 5px;
   text-transform: uppercase;
+  display: inline-block;
 }
 
 .choose_image_style .style_id {
@@ -177,8 +177,8 @@
   display: -ms-flexbox;
   display: flex;
   padding: 5px 10px;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 12px;
+  line-height: 14px;
   font-weight: 500;
   cursor: pointer;
   -webkit-box-align: center;

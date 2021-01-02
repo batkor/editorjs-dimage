@@ -154,7 +154,7 @@ export default class Tunes {
    */
   makeImageSelect(tuneEl, styles, currentImageStyle) {
     const select = make('div', ['choose_image_style', 'showed']);
-    select.appendChild(make('div', 'label', {'innerHTML': 'Choose image style'}));
+    select.appendChild(make('div', 'label', {'innerHTML': 'Image styles'}));
     const list = make('div', 'list_styles');
     Object.keys(styles).map((id) => {
       let classes = ['style_id'];

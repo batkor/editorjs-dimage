@@ -1,14 +1,15 @@
 {
   "name": "@editorjs/image",
-  "version": "2.6.0",
+  "version": "1.0.1",
   "keywords": [
     "codex editor",
     "tool",
     "image",
     "editor.js",
-    "editorjs"
+    "editorjs",
+    "Drupal"
   ],
-  "description": "Image Tool for Editor.js",
+  "description": "This project provides image tool EditorJs, special for Drupal.",
   "license": "MIT",
   "repository": "https://github.com/editor-js/image",
   "main": "./dist/bundle.js",
@@ -20,8 +21,8 @@
     "lint:fix": "eslint src/ --ext .js --fix"
   },
   "author": {
-    "name": "CodeX",
-    "email": "team@ifmo.su"
+    "name": "batkor",
+    "email": "info@batkor.ru"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",

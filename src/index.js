@@ -464,7 +464,7 @@ export default class ImageTool {
       return;
     }
     this.uploader.fetchImageStyleUrl({
-      file_id: this._data['file']['id'],
+      uuid: this._data['file']['uuid'],
       image_style_id: imageStyleId,
     }, (data) => {
       this.ui.fillImage(data['url'])

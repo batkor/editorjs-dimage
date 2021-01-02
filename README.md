@@ -1,3 +1,7 @@
+Node: This is a fork of the image tool for EditorJs.
+It is created specially for integration to Drupal.
+Adds tune(action) for choose image style
+
 ![](https://badgen.net/badge/Editor.js/v2.0/blue)
 
 # Image Tool

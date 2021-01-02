@@ -1,4 +1,4 @@
-Node: This is a fork of the image tool for EditorJs.
+Node: This is a fork of the [image tool](https://github.com/editor-js/image) for EditorJs.
 It is created specially for integration to Drupal.
 Adds tune(action) for choose image style
 

@@ -11,7 +11,7 @@
   ],
   "description": "This project provides image tool EditorJs, special for Drupal.",
   "license": "MIT",
-  "repository": "https://github.com/editor-js/image",
+  "repository": "https://github.com/batkor/editorjs-dimage",
   "main": "./dist/bundle.js",
   "scripts": {
     "build": "webpack --mode production",

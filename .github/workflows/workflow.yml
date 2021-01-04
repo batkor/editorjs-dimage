@@ -10,15 +10,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      - name: Install Node.js
+        uses: actions/setup-node@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Test release action
-          draft: false
-          prerelease: false
+          node-version: 15
+      - run: npm install
+      - run: npm run build
+#      - name: Create Release
+#        id: create_release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: ${{ github.ref }}
+#          release_name: Release ${{ github.ref }}
+#          body: |
+#            Test release action
+#          draft: false
+#          prerelease: false

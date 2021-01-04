@@ -12,12 +12,13 @@ Image Block for the [Editor.js](https://editorjs.io).
 
 ## Features
 
-- Uploading file from the device
-- Pasting copied content from the web
-- Pasting images by drag-n-drop
-- Pasting files and screenshots from Clipboard
-- Allows adding a border, and a background
-- Allows stretching an image to the container's full-width
+- Uploading file from the device;
+- Pasting copied content from the web;
+- Pasting images by drag-n-drop;
+- Pasting files and screenshots from Clipboard;
+- Allows adding a border, and a background;
+- Allows stretching an image to the container's full-width;
+- Selecting image style.
 
 **Notes**
 
@@ -78,6 +79,7 @@ var editor = EditorJS({
         endpoints: {
           byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
           byUrl: 'http://localhost:8008/fetchUrl', // Your endpoint that provides uploading by Url
+          fetchStyleUrl: 'http://localhost:8008/fetch_style_url'
         }
       }
     }
@@ -143,6 +145,7 @@ This Tool returns `data` with following format
 | withBorder     | `boolean` | add border to image             |
 | withBackground | `boolean` | need to add background          |
 | stretched      | `boolean` | stretch image to screen's width |
+| image_styles   | `object` | The image styles list |
 
 
 ```json
@@ -150,7 +153,15 @@ This Tool returns `data` with following format
     "type" : "image",
     "data" : {
         "file": {
-            "url" : "https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg"
+            "url": "https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg",
+            "uuid": "7731d976-4225-4ea2-8ee4-1dd495487881",
+            "image_style": "large"
+            // ... and any additional fields you want to store, such as width, height, color, extension, etc
+        },
+        "image_styles": {
+            "": "- None -",
+            "large": "Large (480×480)",
+            "medium": "Medium (220×220)"
         },
         "caption" : "Roadster // tesla.com",
         "withBorder" : false,
@@ -188,6 +199,7 @@ Response of your uploader **should** cover following format:
     "success" : 1,
     "file": {
         "url" : "https://www.tesla.com/tesla_theme/assets/img/_vehicle_redesign/roadster_and_semi/roadster/hero.jpg",
+        "uuid": "7731d976-4225-4ea2-8ee4-1dd495487881",
         // ... and any additional fields you want to store, such as width, height, color, extension, etc
     }
 }

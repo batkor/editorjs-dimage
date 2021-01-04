@@ -28,4 +28,3 @@ jobs:
             Test release action
           draft: true
           prerelease: false
-          file: dist/*

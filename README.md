@@ -8,7 +8,7 @@ Adds tune(action) for choose image style
 
 Image Block for the [Editor.js](https://editorjs.io).
 
-![](https://i.imgur.com/KbLKmfG.png)
+![](https://i.ibb.co/L0WR1Fz/dimage.gif)
 
 ## Features
 

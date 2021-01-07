@@ -3,6 +3,7 @@ import bgIcon from './svg/background.svg';
 import borderIcon from './svg/border.svg';
 import stretchedIcon from './svg/stretched.svg';
 import editIcon from './svg/edit.svg';
+import centerIcon from './svg/center.svg';
 
 /**
  * Working with Block Tunes
@@ -43,6 +44,11 @@ export default class Tunes {
         name: 'withBackground',
         icon: bgIcon,
         title: 'With background',
+      },
+      {
+        name: 'center',
+        icon: centerIcon,
+        title: 'Center',
       }
     ];
   }
@@ -99,31 +105,10 @@ export default class Tunes {
 
 
     // Add button for choose image style.
-    const title = this.api.i18n.t('Choose image style');
-    const el = make('div', [this.CSS.buttonBase, this.CSS.button], {
-      innerHTML: editIcon,
-      title,
-    });
-    el.addEventListener('click', () => {
-      const imageStyleEl = el.parentElement.querySelector('.choose_image_style');
-      if (!imageStyleEl) {
-        this.makeImageSelect(el, config.imageStyles, toolData['image_style'])
-      }
-      else {
-        imageStyleEl.classList.toggle('showed', !imageStyleEl.classList.contains('showed'))
-      }
-    });
+    if (Object.keys(config.imageStyles).length) {
+      wrapper.appendChild(this.makeImageStyleTune(config.imageStyles, toolData));
+    }
 
-    el.dataset.tune = 'image_style';
-    el.classList.toggle(this.CSS.buttonActive, toolData[el.dataset.tune]);
-
-    this.buttons.push(el);
-
-    this.api.tooltip.onHover(el, title, {
-      placement: 'top',
-    });
-
-    wrapper.appendChild(el);
     return wrapper;
   }
 
@@ -143,6 +128,40 @@ export default class Tunes {
 
     button.classList.toggle(this.CSS.buttonActive, !button.classList.contains(this.CSS.buttonActive));
     this.onChange(tuneName);
+  }
+
+  /**
+   * Make tune for choose image style.
+   *
+   * @param {imageStyles} imageStyle
+   * @param {ImageToolData} toolData
+   */
+  makeImageStyleTune(imageStyle, toolData) {
+    const title = this.api.i18n.t('Choose image style');
+    const el = make('div', [this.CSS.buttonBase, this.CSS.button], {
+      innerHTML: editIcon,
+      title,
+    });
+    el.addEventListener('click', () => {
+      const imageStyleEl = el.parentElement.querySelector('.choose_image_style');
+      if (!imageStyleEl) {
+        this.makeImageSelect(el, imageStyle, toolData['image_style'])
+      }
+      else {
+        imageStyleEl.classList.toggle('showed', !imageStyleEl.classList.contains('showed'))
+      }
+    });
+
+    el.dataset.tune = 'image_style';
+    el.classList.toggle(this.CSS.buttonActive, toolData[el.dataset.tune]);
+
+    this.buttons.push(el);
+
+    this.api.tooltip.onHover(el, title, {
+      placement: 'top',
+    });
+
+    return el;
   }
 
   /**

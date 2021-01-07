@@ -137,6 +137,12 @@
   }
 }
 
+.image-tool--center .image-tool__image{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .choose_image_style {
   opacity: 0;
   visibility: hidden;

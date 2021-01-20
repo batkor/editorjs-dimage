@@ -10,7 +10,8 @@ export default class Uploader {
   /**
    * @param {object} params - uploader module params
    * @param {ImageConfig} params.config - image tool config
-   * @param {Function} params.onUpload - one callback for all uploading (file, url, d-n-d, pasting)
+   * @param {Function} params.onUpload - one callback for all uploading (file,
+   *   url, d-n-d, pasting)
    * @param {Function} params.onError - callback for uploading errors
    */
   constructor({ config, onUpload, onError }) {
@@ -182,14 +183,15 @@ export default class Uploader {
    * @param {Function} callback - The callback function.
    */
   fetchImageStyleUrl(requestData, callback) {
-    let upload = ajax.post({
+    ajax.post({
       url: this.config.endpoints.fetchStyleUrl,
       data: Object.assign(requestData, this.config.additionalRequestData),
       type: ajax.contentType.JSON,
-      headers: this.config.additionalRequestHeaders,
-    }).then(response => response.body);
-    upload.then((response) => {
-      callback(response);
+      headers: {
+        "X-CSRF-Token": this.config.additionalRequestHeaders['X-CSRF-Token']
+      },
+    }).then((response) => {
+      callback(response.body);
     }).catch((error) => {
       this.onError(error);
     });
